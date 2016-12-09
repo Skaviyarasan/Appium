@@ -16,7 +16,6 @@ public class TestData {
 	{
 		try
 		{
-			//pData.load(new FileInputstream(Data.properties));
 			File fs = new File("Configuration.properties");
 			System.out.println("Config Path = " + fs.getAbsolutePath());
 			pConfig.load(new FileInputStream("D:\\Appium\\Workspace\\appium\\src\\test\\java\\com\\PropertyFile\\Configuration.properties"));

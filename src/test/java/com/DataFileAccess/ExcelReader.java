@@ -16,10 +16,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-
-
-//import exception.ElementNotFoundException;
-
 public class ExcelReader {	
 
 
@@ -66,17 +62,11 @@ public class ExcelReader {
 
 
 			SheetObject = workbook.getSheet(SheetName);
-			/*fis.close();*/
 
-
-		/*	if(SheetObject == null)
-			{
-				       	throw new ElementNotFoundException("The Sheet "+SheetName+ " is not found in the File "+FileName+"\n\n",client);
-			}*/
 		}
 		catch(Exception e)
 		{
-		//	log.error("Exception Occurred",e);
+
 			e.printStackTrace();
 		}
 
@@ -128,12 +118,7 @@ public class ExcelReader {
 						ColumnIndex		= 	celltoFind.getColumnIndex();
 						found = true;
 					}
-				}
-
-				if(found == false)
-				{
-					//		    		throw new ElementNotFoundException("The Column "+Header+" is not found in the "+sheetName+" sheet of the File "+fileName,client);
-				}
+				}			
 			}
 		}catch(Exception e)
 		{
@@ -168,10 +153,6 @@ public class ExcelReader {
 	@SuppressWarnings("deprecation")
 	public String readXLatIndex(String fileName,String sheetName, String cellContent, int ColumnIndex)
 	{
-		//String Parameters = "FileName : "+fileName+", SheetName : "+sheetName+", Row Index : "+RowIndex+", Column Index : "+ColumnIndex+"\n";
-		//log.info("Inside Method readXLatIndex() \n Parameters : "+Parameters);
-
-
 		int RowIndex=0;
 		//RowIndex-= 1;
 		ColumnIndex-=1;
@@ -209,9 +190,6 @@ public class ExcelReader {
 						ColumnStringValue = "";
 
 					case Cell.CELL_TYPE_NUMERIC:
-
-						//ColumnStringValue = celltoFind.toString().replaceAll("\\.?0*$", "");   //Removing Trailing Zeros and assigning to the String
-						//ColumnStringValue = celltoFind.toString().replaceAll("\\.?0*$", "");
 						long i = (long)celltoFind.getNumericCellValue();//Getting Numeric value from the sheet and Type casting to 'long' type to hold more than 12 digits 
 						ColumnStringValue = String.valueOf(i);  
 						break;
@@ -424,8 +402,6 @@ public class ExcelReader {
 
 				Iterator<Cell> HeaderCellIterator = DummyRow.cellIterator();
 
-				// Iterating to find the cell count
-
 				while(HeaderCellIterator.hasNext())
 				{
 					Cell CurrentRowCells = HeaderCellIterator.next();
@@ -441,104 +417,6 @@ public class ExcelReader {
 
 
 		return cellCount;
-	}
-
-	/**************************************************************************************************************************************************************************/
-	/**************************************************************************************************************************************************************************/
-
-
-	/* 
-	 * Method Name: writeToXLCell()
-	 * 
-	 * Input Parameters  : File Name 			(String)
-	 *  				 : Sheet Name           (String)
-	 *  				 : row 					(Integer)
-	 *  				 : Column				(Integer)
-	 *  				 : Value to Write       (String)
-	 * 
-	 * 
-	 * Description		: This method writes a String to the Given Cell.
-	 * 
-	 */
-
-	public void writeToXLCell(String FileName, String SheetName, int row, int column, String ValuetoWrite)throws Exception
-	{
-		String Parameters = "FileName : "+FileName+", SheetName : "+SheetName+", Row Number : "+row+", Column Number : "+column+", \n Value to Write : " +ValuetoWrite+"\n";
-		log.info("Inside Method writeToXLCell() \n Parameters : "+Parameters);	
-		try
-		{
-
-			row-=1;
-			column-=1;		
-
-			Sheet sheet = getWorkSheet(FileName,SheetName);
-			if(sheet!=null)
-			{
-				Row rowObject=sheet.createRow(row);
-				Cell cell=rowObject.createCell(column);
-
-				cell.setCellValue(ValuetoWrite);
-
-				FileOutputStream outFile =new FileOutputStream(new File(FileName));
-
-				Workbook workbook = sheet.getWorkbook();
-				workbook.write(outFile);
-				//outFile.close();
-			}
-		}
-		catch(Exception e)
-		{		
-			e.printStackTrace();
-			log.error("Exception Occurred",e);
-		}
-
-	}
-
-	/**************************************************************************************************************************************************************************/
-	/**************************************************************************************************************************************************************************/
-
-
-	/* 
-	 * Method Name: saveCopy()
-	 * 
-	 * Input Parameters  : File Name 			(String)
-	 *  				 : New File Name           (String)
-	 * 
-	 * 
-	 * Description		: This method Saves a copy of the given file with a new name given
-	 */
-
-	public void saveCopy(String FileName, String NewFileName)
-	{
-		String Parameters = "Source FileName : "+FileName+", Destination FileName : "+NewFileName+"\n";	
-		log.info("Inside Method saveCopy() \n Parameters : "+Parameters);	
-
-		try
-		{
-			File source	=	new File(FileName);
-			File dest		=	new File(NewFileName); 
-
-			Files.copy(source.toPath(), dest.toPath());
-
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			log.error("Exception Occurred",e);
-		}
-	}
-
-	public int findRow(XSSFSheet sheet, String cellContent) {
-		for (Row row : sheet) {
-			for (Cell cell : row) {
-				if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-					if (cell.getRichStringCellValue().getString().trim().equals(cellContent)) {
-						return row.getRowNum();  
-					}
-				}
-			}
-		}               
-		return 0;
 	}
 
 }
