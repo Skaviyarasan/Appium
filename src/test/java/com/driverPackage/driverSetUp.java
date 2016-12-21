@@ -51,9 +51,12 @@ public class driverSetUp extends TestData{
 		System.out.println("Entered into Fetch Method");
 		ExcelReader readr=new ExcelReader();
 		System.out.println("Excel Object Created");
+		String relativePath = new File(System.getProperty("user.dir")).getAbsolutePath();
+		int ColumnIndex = readr.readHeaderIndex(relativePath + "\\AppiumData.xlsx","Data", Uname);
+		Udata=readr.readXLatIndex(relativePath + "\\AppiumData.xlsx","Data",TCID,ColumnIndex);
       
-		int ColumnIndex = readr.readHeaderIndex("D:\\Appium\\Workspace\\appium\\AppiumData.xlsx","Data", Uname);
-		Udata=readr.readXLatIndex("D:\\Appium\\Workspace\\appium\\AppiumData.xlsx","Data",TCID,ColumnIndex);
+		/*int ColumnIndex = readr.readHeaderIndex("D:\\Appium\\Workspace\\appium\\AppiumData.xlsx","Data", Uname);
+		Udata=readr.readXLatIndex("D:\\Appium\\Workspace\\appium\\AppiumData.xlsx","Data",TCID,ColumnIndex);*/
 		return Udata;	
 		
 		

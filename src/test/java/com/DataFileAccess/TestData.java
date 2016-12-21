@@ -11,15 +11,18 @@ public class TestData {
 	static Properties pConfig=new Properties();
 	static Properties pOR=new Properties();
 	
+
 		
 	public static void loadPropertyFiles()
 	{
 		try
 		{
-			File fs = new File("Configuration.properties");
-			System.out.println("Config Path = " + fs.getAbsolutePath());
-			pConfig.load(new FileInputStream("D:\\Appium\\Workspace\\appium\\src\\test\\java\\com\\PropertyFile\\Configuration.properties"));
-			pOR.load(new FileInputStream("D:\\Appium\\Workspace\\appium\\src\\test\\java\\com\\PropertyFile\\ObjectRepo.properties"));
+			String relativePath = new File(System.getProperty("user.dir")).getAbsolutePath();
+			pConfig.load(new FileInputStream(relativePath + "\\src\\test\\java\\com\\PropertyFile\\Configuration.properties"));
+			pOR.load(new FileInputStream(relativePath + "\\src\\test\\java\\com\\PropertyFile\\ObjectRepo.properties"));
+			//pConfig.load(new FileInputStream("D:\\Appium\\Workspace\\appium\\src\\test\\java\\com\\PropertyFile\\Configuration.properties"));
+			//pOR.load(new FileInputStream("D:\\Appium\\Workspace\\appium\\src\\test\\java\\com\\PropertyFile\\ObjectRepo.properties"));
+			
 		}catch(FileNotFoundException e)
 		{
 			e.printStackTrace();
